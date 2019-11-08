@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[2]:
+
+
+
+def alice_bob_loss(input_message, bob_out_message, eves_loss, batch_size):
+
+  ## Alice-Bob Loss part-1
+  
+  # Mapping -1 to 0 and 1 to 1
+  ab_diff = (bob_out_message + 1.0)/2.0 - (input_message + 1.0)/2.0
+  
+  # Alice and Bob's average L1 distance Loss of the given batch
+  bob_reconstruction_loss = (1/batch_size)*tf.reduce_sum(tf.abs(ab_diff))
+
+  
+  ## Alice-Bob Loss part-2
+  # To make sure Eve at least has 50% of bits wrong so that output simulates random probability of binary output
+  # ((N/2 - EveLoss)^2)/((N/2)^2)
+  eve_evadropping_loss = tf.reduce_sum( tf.square(float(TEXT_SIZE) / 2.0 - eves_loss) / (TEXT_SIZE / 2)**2)
+
+  # bobs final reconstruction loss
+  loss = bob_reconstruction_loss + eve_evadropping_loss
+  
+  return loss
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
